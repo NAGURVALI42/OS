@@ -1,0 +1,40 @@
+#include<stdio.h>
+#define MAX_MEMORY 1000
+int main() {
+    int block_size[10], file_size[10], block_count, file_count, i, j;
+    int block_allocated[10] = {0};
+
+    printf("Enter the number of memory blocks: ");
+    scanf("%d", &block_count);
+
+    printf("Enter the size of each memory block:\n");
+    for (i = 0; i < block_count; i++) {
+        scanf("%d", &block_size[i]);
+    }
+
+    printf("Enter the number of files: ");
+    scanf("%d", &file_count);
+
+    printf("Enter the size of each file:\n");
+    for (i = 0; i < file_count; i++) {
+        scanf("%d", &file_size[i]);
+    }
+
+    printf("\nFile No.\tFile Size\tBlock No.\tBlock Size\tFragment\n");
+
+    for (i = 0; i < file_count; i++) {
+        printf("%d\t\t%d\t\t", i + 1, file_size[i]);
+        for (j = 0; j < block_count; j++) {
+            if (block_allocated[j] == 0 && block_size[j] >= file_size[i]) {
+                printf("%d\t\t%d\t\t%d\n", j + 1, block_size[j], block_size[j] - file_size[i]);
+                block_allocated[j] = 1;
+                break;
+            }
+        }
+        if (j == block_count) {
+            printf("File cannot be allocated\n");
+        }
+    }
+
+    return 0;
+}
