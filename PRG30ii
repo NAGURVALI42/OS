@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <pthread.h>
+
+void *print_numbers(void *ptr) {
+    for (int i = 1; i <= 5; i++) {
+        printf("%d\n", i);
+    }
+    pthread_exit(NULL);
+}
+
+int main() {
+    pthread_t thread;
+
+    pthread_create(&thread, NULL, print_numbers, NULL);
+    pthread_join(thread, NULL);
+
+    printf("Thread has finished.\n");
+
+    return 0;
+}
