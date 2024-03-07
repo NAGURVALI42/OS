@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+
+void *print_message(void *ptr) {
+    printf("%s\n", (char *)ptr);
+    pthread_exit(NULL);
+}
+
+int main() {
+    pthread_t thread;
+    char *message = "Exiting thread with pthread_exit";
+
+    pthread_create(&thread, NULL, print_message, (void *)message);
+
+    // Using pthread_exit to terminate the main thread
+    pthread_exit(NULL);
+
+    // This line will not be executed
+    printf("Main thread exiting.\n");
+
+    return 0;
+}
