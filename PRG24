@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main() {
+    int file_descriptor;
+    char buffer[100];
+
+    // Open a file for reading and writing
+    file_descriptor = open("example.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    if (file_descriptor == -1) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    // Write to the file
+    write(file_descriptor, "Hello, World!", 13);
+
+    // Set the file cursor to the beginning of the file
+    lseek(file_descriptor, 0, SEEK_SET);
+
+    // Read from the file
+    read(file_descriptor, buffer, 13);
+    printf("Data read from file: %s\n", buffer);
+
+    // Close the file
+    close(file_descriptor);
+
+    return 0;
+}
